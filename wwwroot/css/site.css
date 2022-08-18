@@ -1,3 +1,7 @@
+* {
+  color:white;
+}
+
 html {
   font-size: 14px;
 }
@@ -51,15 +55,25 @@ img{
 }
 
 .comodines {
+  width: 80%;
   height: 15%;
   padding: 2%;
 }
 
 .comodin {
+  padding-top: 3%;
   width: 30%;
   height: 100%;
   border: 1px white solid;
+  background-color:rgb(191, 118, 0);
+	text-align:center;
+  font-size: 180%;
+  font-family: fantasy;
   border-radius: 50%;
+}
+
+.comodintit {
+  padding-top: 1%;
 }
 
 .juego {
@@ -80,7 +94,6 @@ img{
 }
 
 .contDer {
-  border: 1px white solid;
   width: 60%;
   height: 100%;
   float: right;

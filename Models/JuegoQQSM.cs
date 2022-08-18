@@ -19,7 +19,7 @@ public static class JuegoQQSM
     public static void IniciarJuego(string Nombre)
     {
         _PreguntaActual = 1;
-        using(SqlConnection dn = new SqlConnection(_connectionString))
+        using(SqlConnection db = new SqlConnection(_connectionString))
         {
             string sql = "SELECT Respuesta.OpcionRespuesta FROM Respuesta WHERE Respuesta.IdPregunta = @pPregunta and Respuesta.Correcta = 1";
             _RespuestaCorrectaActual = db.QueryFirstOrDefault<char>(sql, new {pPregunta = _PreguntaActual});
@@ -30,10 +30,10 @@ public static class JuegoQQSM
         _Comodin5050 = true;
         _ComodinDobleChance = true;
         _ComodinSaltearPregunta = true;
-        using(SqlConnection dn = new SqlConnection(_connectionString))
+        using(SqlConnection db = new SqlConnection(_connectionString))
         {
             string sql = "INSERT INTO Jugador VALUES(@pNombre, @pFechaHora, @pPozoGanado, @pComodinDC, @pComodin50, @pComodinSaltear)";
-            db.Execute<char>(sql, new {pNombre = Nombre, pFechaHora = DateTime.Now, pPozoGanado = _PozoAcumuladoSeguro, pComodinDC = _ComodinDobleChance, pComodin50 = _Comodin5050, pComodinSaltear = _ComodinSaltearPregunta});
+            db.Execute(sql, new {pNombre = Nombre, pFechaHora = DateTime.Now, pPozoGanado = _PozoAcumuladoSeguro, pComodinDC = _ComodinDobleChance, pComodin50 = _Comodin5050, pComodinSaltear = _ComodinSaltearPregunta});
         }
     }
     public static Pregunta ObtenerProximaPregunta()
@@ -47,7 +47,7 @@ public static class JuegoQQSM
             _PreguntaActual++;
         }
         Pregunta Pregunta = null;
-        using(SqlConnection dn = new SqlConnection(_connectionString))
+        using(SqlConnection db = new SqlConnection(_connectionString))
         {
             string sql = "SELECT Pregunta.* FROM Pregunta WHERE Pregunta.IdPregunta = @pPregunta";
             Pregunta = db.QueryFirstOrDefault<Pregunta>(sql, new {pPregunta = _PreguntaActual});
@@ -56,7 +56,20 @@ public static class JuegoQQSM
     }
     public static List<Respuesta> ObtenerRespuestas()
     {
-        
+        List<Respuesta> ListaRespuestas = new List<Respuesta>();
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            string sql = "SELECT Respuesta.* FROM Respuesta WHERE Respuesta.IdPregunta = @pPregunta";
+            ListaRespuestas = db.Query<Respuesta>(sql, new {pPregunta = _PreguntaActual}).ToList();
+        }
+        foreach(Respuesta respuesta in ListaRespuestas)
+        {
+            if(respuesta.Correcta == true)
+            {
+                _RespuestaCorrectaActual = respuesta.OpcionRespuesta;
+            }
+        }
+        return ListaRespuestas;
     }
 
 }
