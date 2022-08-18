@@ -1,0 +1,10 @@
+@{
+    ViewData["Title"] = "Menú";
+}
+<body class="menu">
+    <div class="logo"><img src="/logo.png"></div>
+    <form class="nombre" method="post" action='@Url.Action("Jugar","Home")'>
+        <input type="text" placeholder="Nombre">
+        <input type="submit" class="btn btn-warning" value="Jugar">
+    </form>
+</body>
