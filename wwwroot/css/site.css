@@ -65,11 +65,18 @@ img{
   width: 30%;
   height: 100%;
   border: 1px white solid;
-  background-color:rgb(191, 118, 0);
 	text-align:center;
   font-size: 180%;
   font-family: fantasy;
   border-radius: 50%;
+}
+
+.on {
+  background-color:rgb(191, 118, 0);
+}
+
+.off {
+  background-color: rgb(131, 128, 128);
 }
 
 .comodintit {
@@ -82,13 +89,44 @@ img{
 }
 
 .pregunta {
+  padding-top: 3%;
   border: 1px white solid;
   width: 100%;
   height: 30%;
+  text-align: center;
+  font-size: 170%;
 }
 
-.opciones{
+.respuesta {
   border: 1px white solid;
+}
+
+.textoRes {
+  float: left;
+  margin-top: 5%;
+  margin-left: 10%;
+  font-size: 150%;
+}
+
+.opcion {
+  margin-top: 2%;
+  border: 1px white solid;
+  width: 15%;
+  height: 80%;
+  float: left;
+  text-align: center;
+  font-size: 200%;
+}
+
+.normal {
+  background-color:rgb(40, 90, 140);
+}
+
+.mal {
+  background-color: rgb(194, 30, 30);
+}
+
+.opciones {
   height: 30%;
   padding: 2%;
 }
@@ -100,11 +138,31 @@ img{
 }
 
 .escalon {
+  padding-left: 2%;
   border: 1px white solid;
   width: 100%;
+  font-size: 115%;
 }
 
-.logofinal{
+.escalonSeg {
+  padding-left: 2%;
+  margin-right: 15%;
+  border: 1px white solid;
+  width: 115%;
+  font-size: 130%;
+  font-weight: bold;
+}
+
+.completado {
+  background-color: rgb(48, 160, 50);
+}
+
+.accion {
+  margin-top: 3%;
+  font-size: 130%;
+}
+
+.logofinal {
   width: 25%;
   height: auto;
   margin-left: 37.5%;
