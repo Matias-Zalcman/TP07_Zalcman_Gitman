@@ -26,6 +26,11 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult Jugar(string Nombre)
     {
+        JuegoQQSM.IniciarJuego(Nombre);
+        ViewBag.pregunta = JuegoQQSM.ObtenerProximaPregunta();
+        ViewBag.listaRespuestas = JuegoQQSM.ObtenerRespuestas();
+        ViewBag.player = JuegoQQSM.DevolverJugador();
+        ViewBag.listaPozo = JuegoQQSM.ListarPozo();
         return View("Pregunta");
     }
 
