@@ -19,11 +19,6 @@ public static class JuegoQQSM
     public static void IniciarJuego(string Nombre)
     {
         _PreguntaActual = 0;
-        using(SqlConnection db = new SqlConnection(_connectionString))
-        {
-            string sql = "SELECT Respuestas.OpcionRespuesta FROM Respuestas WHERE Respuestas.IdPregunta = @pPregunta and Respuestas.Correcta = 1";
-            _RespuestaCorrectaActual = db.QueryFirstOrDefault<char>(sql, new {pPregunta = _PreguntaActual});
-        }
         _PosicionPozo = 0;
         _PozoAcumuladoSeguro = 0;
         _PozoAcumulado = 0;
@@ -73,7 +68,7 @@ public static class JuegoQQSM
     }
     public static bool RespuestaUsuario(char Opcion, char OpcionComodin)
     {
-        if(OpcionComodin != "")
+        if(OpcionComodin == 'A' || OpcionComodin == 'B' || OpcionComodin == 'C' || OpcionComodin == 'D')
         {
             Opcion = OpcionComodin;
             _ComodinDobleChance = false;
@@ -85,7 +80,7 @@ public static class JuegoQQSM
                 registrosModificados = db.Execute(sql, new {pComodin = _ComodinDobleChance, pIdJug = _Player.IdJugador});
             }
         }
-        if(Opcion = _RespuestaCorrectaActual)
+        if(Opcion == _RespuestaCorrectaActual)
         {
             _PosicionPozo++;
             _PozoAcumulado = _ListaPozo[_PosicionPozo].Importe;
@@ -100,37 +95,32 @@ public static class JuegoQQSM
                     registrosModificados = db.Execute(sql, new {pPozo = _Player.PozoGanado, pIdJug = _Player.IdJugador});
                 }
             }
-            if(_PreguntaActual == 4)
-            {
-                _PreguntaActual = 6;
-            }
-            else
-            {
-                _PreguntaActual++;
-            }
         }
-        return (Opcion = _RespuestaCorrectaActual);
+        return (Opcion == _RespuestaCorrectaActual);
     }
     public static List<Pozo> ListarPozo()
     {
-        _ListaPozo.Add(1000,false);
-        _ListaPozo.Add(3000,false);
-        _ListaPozo.Add(5000,false);
-        _ListaPozo.Add(10000,false);
-        _ListaPozo.Add(20000,false);
-        _ListaPozo.Add(30000,true);
-        _ListaPozo.Add(50000,false);
-        _ListaPozo.Add(80000,false);
-        _ListaPozo.Add(100000,false);
-        _ListaPozo.Add(150000,false);
-        _ListaPozo.Add(180000,false);
-        _ListaPozo.Add(200000,true);
-        _ListaPozo.Add(300000,false);
-        _ListaPozo.Add(400000,false);
-        _ListaPozo.Add(500000,false);
-        _ListaPozo.Add(1000000,false);
-        _ListaPozo.Add(1500000,false);
-        _ListaPozo.Add(2000000,true);
+        if(_ListaPozo.Count == 0)
+        {
+            _ListaPozo.Add(new Pozo(1000,false));
+            _ListaPozo.Add(new Pozo(3000,false));
+            _ListaPozo.Add(new Pozo(5000,false));
+            _ListaPozo.Add(new Pozo(10000,false));
+            _ListaPozo.Add(new Pozo(20000,false));
+            _ListaPozo.Add(new Pozo(30000,true));
+            _ListaPozo.Add(new Pozo(50000,false));
+            _ListaPozo.Add(new Pozo(80000,false));
+            _ListaPozo.Add(new Pozo(100000,false));
+            _ListaPozo.Add(new Pozo(150000,false));
+            _ListaPozo.Add(new Pozo(180000,false));
+            _ListaPozo.Add(new Pozo(200000,true));
+            _ListaPozo.Add(new Pozo(300000,false));
+            _ListaPozo.Add(new Pozo(400000,false));
+            _ListaPozo.Add(new Pozo(500000,false));
+            _ListaPozo.Add(new Pozo(1000000,false));
+            _ListaPozo.Add(new Pozo(1500000,false));
+            _ListaPozo.Add(new Pozo(2000000,true));
+        }
         return _ListaPozo;
     }
     public static int DevolverPosicionPozo()
@@ -152,7 +142,7 @@ public static class JuegoQQSM
             }
             using(SqlConnection db = new SqlConnection(_connectionString))
             {
-                string sql = "SELECT TOP 2 Respuestas.OpcionRespuesta FROM Respuestas WHERE Respuestas.IdPregunta = @pPregunta and Respuestas.Correcta = false";
+                sql = "SELECT TOP 2 Respuestas.OpcionRespuesta FROM Respuestas WHERE Respuestas.IdPregunta = @pPregunta and Respuestas.Correcta = false";
                 ListaDescarte = db.Query<char>(sql, new {pPregunta = _PreguntaActual}).ToList();
             }
         }
@@ -160,7 +150,7 @@ public static class JuegoQQSM
     }
     public static void SaltearPregunta()
     {
-        if(_Comodin5050)
+        if(_ComodinSaltearPregunta)
         {
             _ComodinSaltearPregunta = false;
             _Player.ComodinSaltear = false;

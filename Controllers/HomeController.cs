@@ -34,6 +34,24 @@ public class HomeController : Controller
         return View("Pregunta");
     }
 
+    public IActionResult PreguntaRespondida(char Opcion1, char Opcion2)
+    {
+        if(JuegoQQSM.RespuestaUsuario(Opcion1,Opcion2))
+        {
+            return View("RespuestapreguntaOk");
+        }
+        else
+        {
+            return View("RespuestapreguntaMal");
+        }
+    }
+
+    public IActionResult FinDelJuego()
+    {
+        ViewBag.player = JuegoQQSM.DevolverJugador();
+        return View("PantallaFindelJuego");
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
