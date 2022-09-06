@@ -54,31 +54,20 @@
                                 esValida = false;
                             }
                         }
-                        if(respuesta.OpcionRespuesta == ViewBag.opcionSeleccionada)
+                        if(esValida)
                         {
-                            <div class="col-sm-6 respuesta noValida">
-                            <div class="opcion mal">@respuesta.OpcionRespuesta</div>
+                            <div class="col-sm-6 respuesta">
+                            <a href='@Url.Action("PreguntaRespondidaPrimerChance","Home",new {Opcion = @respuesta.OpcionRespuesta})' class="opcion normal">@respuesta.OpcionRespuesta</a>
                             <p class="textoRes">@respuesta.TextoRespuesta</p>
                             </div>
                         }
                         else
                         {
-                            if(esValida)
-                            {
-                                <div class="col-sm-6 respuesta">
-                                <a href='@Url.Action("PreguntaRespondida","Home",new {Opcion = @respuesta.OpcionRespuesta})' class="opcion normal">@respuesta.OpcionRespuesta</a>
-                                <p class="textoRes">@respuesta.TextoRespuesta</p>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="col-sm-6 respuesta noValida">
-                                <div class="opcion normal">@respuesta.OpcionRespuesta</div>
-                                <p class="textoRes">@respuesta.TextoRespuesta</p>
-                                </div>
-                            }
+                            <div class="col-sm-6 respuesta noValida">
+                            <div class="opcion normal">@respuesta.OpcionRespuesta</div>
+                            <p class="textoRes">@respuesta.TextoRespuesta</p>
+                            </div>
                         }
-                        
                         
                     }
                 }

@@ -27,23 +27,105 @@ public class HomeController : Controller
     public IActionResult Jugar(string Nombre)
     {
         JuegoQQSM.IniciarJuego(Nombre);
-        ViewBag.pregunta = JuegoQQSM.ObtenerProximaPregunta();
+        ViewBag.pregunta = JuegoQQSM.ObtenerPregunta();
         ViewBag.listaRespuestas = JuegoQQSM.ObtenerRespuestas();
         ViewBag.player = JuegoQQSM.DevolverJugador();
         ViewBag.listaPozo = JuegoQQSM.ListarPozo();
+        ViewBag.posPozo = JuegoQQSM.DevolverPosicionPozo();
+        ViewBag.opcionSeleccionada = 'Z';
+        ViewBag.listaDescarte = new List<char>();
+        ViewBag.listaDescarte.Add(ViewBag.opcionSeleccionada);
         return View("Pregunta");
     }
 
-    public IActionResult PreguntaRespondida(char Opcion1, char Opcion2)
+    public IActionResult ComodinUsado(int comodin)
     {
-        if(JuegoQQSM.RespuestaUsuario(Opcion1,Opcion2))
+        ViewBag.opcionSeleccionada = 'Z';
+        ViewBag.listaDescarte = new List<char>();
+        ViewBag.listaDescarte.Add(ViewBag.opcionSeleccionada);
+        ViewBag.listaRespuestas = JuegoQQSM.ObtenerRespuestas();
+        switch(comodin)
+        {
+            case 1:
+            ViewBag.listaDescarte = JuegoQQSM.Descartar50();
+            break;
+
+            case 2:
+            JuegoQQSM.DoblarChance();
+            break;
+
+            case 3:
+            char opcionCorrecta = JuegoQQSM.ObtenerOpcionCorrecta();
+            bool preguntaSalteada = JuegoQQSM.RespuestaUsuario(opcionCorrecta);
+            JuegoQQSM.SaltearPregunta();
+            break;
+        }
+        ViewBag.pregunta = JuegoQQSM.ObtenerPregunta();
+        ViewBag.listaRespuestas = JuegoQQSM.ObtenerRespuestas();
+        ViewBag.player = JuegoQQSM.DevolverJugador();
+        ViewBag.listaPozo = JuegoQQSM.ListarPozo();
+        ViewBag.posPozo = JuegoQQSM.DevolverPosicionPozo();
+        if(comodin == 2)
+        {
+            return View("Pregunta2");
+        }
+        else
+        {
+            return View("Pregunta");
+        }
+    }
+
+    public IActionResult PreguntaRespondida(char Opcion)
+    {
+        ViewBag.pregunta = JuegoQQSM.ObtenerPregunta();
+        ViewBag.listaRespuestas = JuegoQQSM.ObtenerRespuestas();
+        ViewBag.player = JuegoQQSM.DevolverJugador();
+        ViewBag.listaPozo = JuegoQQSM.ListarPozo();
+        ViewBag.posPozo = JuegoQQSM.DevolverPosicionPozo();
+        ViewBag.opcionSeleccionada = Opcion;
+        if(JuegoQQSM.RespuestaUsuario(Opcion))
         {
             return View("RespuestapreguntaOk");
         }
         else
         {
+            ViewBag.opcionCorrecta = JuegoQQSM.ObtenerOpcionCorrecta();
             return View("RespuestapreguntaMal");
         }
+    }
+
+    public IActionResult PreguntaRespondidaPrimerChance(char Opcion)
+    {
+        ViewBag.pregunta = JuegoQQSM.ObtenerPregunta();
+        ViewBag.listaRespuestas = JuegoQQSM.ObtenerRespuestas();
+        ViewBag.player = JuegoQQSM.DevolverJugador();
+        ViewBag.listaPozo = JuegoQQSM.ListarPozo();
+        ViewBag.posPozo = JuegoQQSM.DevolverPosicionPozo();
+        ViewBag.opcionSeleccionada = Opcion;
+        ViewBag.listaDescarte = new List<char>();
+        ViewBag.listaDescarte.Add(ViewBag.opcionSeleccionada);
+        if(JuegoQQSM.RespuestaUsuario(Opcion))
+        {
+            return View("RespuestapreguntaOk");
+        }
+        else
+        {
+            return View("Pregunta");
+        }
+    }
+
+    public IActionResult Avanzar()
+    {
+        JuegoQQSM.CambiarPregunta();
+        ViewBag.pregunta = JuegoQQSM.ObtenerPregunta();
+        ViewBag.listaRespuestas = JuegoQQSM.ObtenerRespuestas();
+        ViewBag.player = JuegoQQSM.DevolverJugador();
+        ViewBag.listaPozo = JuegoQQSM.ListarPozo();
+        ViewBag.posPozo = JuegoQQSM.DevolverPosicionPozo();
+        ViewBag.opcionSeleccionada = 'Z';
+        ViewBag.listaDescarte = new List<char>();
+        ViewBag.listaDescarte.Add(ViewBag.opcionSeleccionada);
+        return View("Pregunta");
     }
 
     public IActionResult FinDelJuego()

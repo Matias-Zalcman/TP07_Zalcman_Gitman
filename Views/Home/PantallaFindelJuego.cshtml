@@ -1,7 +1,21 @@
 @{
-    ViewData["Title"] = ViewBag.player;
+    ViewData["Title"] = @ViewBag.player.Nombre;
 }
-<h2>@ViewBag.player,</h1>
-<h3>Tu pozo acumulado es de:</h3>
-<h1>$@ViewBag.plata</h1>
-<div class="logofinal"><img src="/logo.png"></div>
+<div class="row">
+    <div class="col-sm-4">
+        @{if(ViewBag.player.PozoGanado == 2000000){<img src="/dinero.gif"><img src="/dinero.gif"><img src="/dinero.gif">}}
+    </div>
+    <div class="col-sm-4 msjFinal">
+        <h2>@ViewBag.player.Nombre,</h1>
+        <h3>Tu pozo acumulado es de:</h3>
+        <h1 class="pozoGanado">$@ViewBag.player.PozoGanado</h1>
+        <div class="logofinal"><img src="/logo.png"></div>
+        @{if(ViewBag.player.PozoGanado == 2000000){<h5>¡Felicidades, ganaste el premio mayor!</h5>}else{<h3>¡Gracias por participar!</h3>}}
+        <a href='@Url.Action("Index","Home")' class="btn btn-warning accion">Volver a jugar</a>
+    </div>
+    <div class="col-sm-4">
+        @{if(ViewBag.player.PozoGanado == 2000000){<img src="/dinero.gif"><img src="/dinero.gif"><img src="/dinero.gif">}}
+    </div>
+</div>
+
+

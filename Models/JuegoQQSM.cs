@@ -18,29 +18,23 @@ public static class JuegoQQSM
 
     public static void IniciarJuego(string Nombre)
     {
-        _PreguntaActual = 0;
-        _PosicionPozo = 0;
+        _PreguntaActual = 1;
+        _PosicionPozo = -1;
         _PozoAcumuladoSeguro = 0;
         _PozoAcumulado = 0;
         _Comodin5050 = true;
         _ComodinDobleChance = true;
         _ComodinSaltearPregunta = true;
+        _Player = new Jugador(1, Nombre, DateTime.Now, _PozoAcumuladoSeguro, _ComodinDobleChance, _Comodin5050, _ComodinSaltearPregunta);
+        int registrosAñadidos = 0;
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
             string sql = "INSERT INTO Jugadores VALUES(@pNombre, @pFechaHora, @pPozoGanado, @pComodinDC, @pComodin50, @pComodinSaltear)";
-            db.Execute(sql, new {pNombre = Nombre, pFechaHora = DateTime.Now, pPozoGanado = _PozoAcumuladoSeguro, pComodinDC = _ComodinDobleChance, pComodin50 = _Comodin5050, pComodinSaltear = _ComodinSaltearPregunta});
+            registrosAñadidos = db.Execute(sql, new {pNombre = _Player.Nombre, pFechaHora = _Player.FechaHora, pPozoGanado = _Player.PozoGanado, pComodinDC = _Player.ComodinDobleChance, pComodin50 = _Player.Comodin50, pComodinSaltear = _Player.ComodinSaltear});
         }
     }
-    public static Pregunta ObtenerProximaPregunta()
+    public static Pregunta ObtenerPregunta()
     {
-        if(_PreguntaActual == 4)
-        {
-            _PreguntaActual = 6;
-        }
-        else
-        {
-            _PreguntaActual++;
-        }
         Pregunta Pregunta = null;
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
@@ -48,6 +42,10 @@ public static class JuegoQQSM
             Pregunta = db.QueryFirstOrDefault<Pregunta>(sql, new {pPregunta = _PreguntaActual});
         }
         return Pregunta;
+    }
+    public static void CambiarPregunta()
+    {
+        _PreguntaActual++;
     }
     public static List<Respuesta> ObtenerRespuestas()
     {
@@ -66,20 +64,21 @@ public static class JuegoQQSM
         }
         return ListaRespuestas;
     }
-    public static bool RespuestaUsuario(char Opcion, char OpcionComodin)
+    public static char ObtenerOpcionCorrecta()
     {
-        if(OpcionComodin == 'A' || OpcionComodin == 'B' || OpcionComodin == 'C' || OpcionComodin == 'D')
+        List<Respuesta> ListaRespuestas = ObtenerRespuestas();
+        char opcionCorrecta = 'Z';
+        foreach(Respuesta respuesta in ListaRespuestas)
         {
-            Opcion = OpcionComodin;
-            _ComodinDobleChance = false;
-            _Player.ComodinDobleChance = false;
-            int registrosModificados = 0;
-            string sql = "UPDATE Jugadores SET ComodinDobleChance = @pComodin WHERE IdJugador = @pIdJug";
-            using(SqlConnection db = new SqlConnection(_connectionString))
+            if(respuesta.Correcta)
             {
-                registrosModificados = db.Execute(sql, new {pComodin = _ComodinDobleChance, pIdJug = _Player.IdJugador});
+                opcionCorrecta = respuesta.OpcionRespuesta;
             }
         }
+        return opcionCorrecta;
+    }
+    public static bool RespuestaUsuario(char Opcion)
+    {
         if(Opcion == _RespuestaCorrectaActual)
         {
             _PosicionPozo++;
@@ -142,11 +141,25 @@ public static class JuegoQQSM
             }
             using(SqlConnection db = new SqlConnection(_connectionString))
             {
-                sql = "SELECT TOP 2 Respuestas.OpcionRespuesta FROM Respuestas WHERE Respuestas.IdPregunta = @pPregunta and Respuestas.Correcta = false";
+                sql = "SELECT TOP 2 Respuestas.OpcionRespuesta FROM Respuestas WHERE Respuestas.IdPregunta = @pPregunta and Respuestas.Correcta = 0";
                 ListaDescarte = db.Query<char>(sql, new {pPregunta = _PreguntaActual}).ToList();
             }
         }
         return ListaDescarte;
+    }
+    public static void DoblarChance()
+    {
+        if(_ComodinDobleChance)
+        {
+            _ComodinDobleChance = false;
+            _Player.ComodinDobleChance = false;
+            int registrosModificados = 0;
+            string sql = "UPDATE Jugadores SET ComodinDobleChance = @pComodin WHERE IdJugador = @pIdJug";
+            using(SqlConnection db = new SqlConnection(_connectionString))
+            {
+                registrosModificados = db.Execute(sql, new {pComodin = _ComodinDobleChance, pIdJug = _Player.IdJugador});
+            }
+        }
     }
     public static void SaltearPregunta()
     {
@@ -160,14 +173,7 @@ public static class JuegoQQSM
             {
                 registrosModificados = db.Execute(sql, new {pComodin = _ComodinSaltearPregunta, pIdJug = _Player.IdJugador});
             }
-            if(_PreguntaActual == 4)
-            {
-                _PreguntaActual = 6;
-            }
-            else
-            {
-                _PreguntaActual++;
-            }
+            CambiarPregunta();
         }
     }
     public static Jugador DevolverJugador()
