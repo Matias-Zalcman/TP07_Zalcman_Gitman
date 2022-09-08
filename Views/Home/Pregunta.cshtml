@@ -2,6 +2,24 @@
     ViewData["Title"] = @ViewBag.player.Nombre;
 }
 <div class="container vh-100 vw-100">
+    <div class="dificultad">
+        @{
+            switch(ViewBag.pregunta.NivelDificultad)
+            {
+                case 1:
+                <h4><b>Nivel: Fácil</b></h4>
+                break;
+
+                case 2:
+                <h4><b>Nivel: Medio</b></h4>
+                break;
+
+                case 3:
+                <h4><b>Nivel: Difícil</b></h4>
+                break;
+            }
+        }
+    </div>
     <div class="row comodines">
         <div class="col-sm-3 comodintit">
             <h3>Comodines</h3>
@@ -18,7 +36,7 @@
                 {
                     if(ViewBag.pregunta.IdPregunta == 18)
                     {
-                        <div class="comodin onSP"><svg xmlns="http://www.w3.org/2000/svg" width="45" height="50" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <div class="comodin onND"><svg xmlns="http://www.w3.org/2000/svg" width="45" height="50" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                         </svg></div>
                     }
@@ -58,7 +76,7 @@
                         {
                             <div class="col-sm-6 respuesta noValida">
                             <div class="opcion mal">@respuesta.OpcionRespuesta</div>
-                            <p class="textoRes">@respuesta.TextoRespuesta</p>
+                            <div class="textoRes">@respuesta.TextoRespuesta</div>
                             </div>
                         }
                         else
@@ -67,14 +85,14 @@
                             {
                                 <div class="col-sm-6 respuesta">
                                 <a href='@Url.Action("PreguntaRespondida","Home",new {Opcion = @respuesta.OpcionRespuesta})' class="opcion normal">@respuesta.OpcionRespuesta</a>
-                                <p class="textoRes">@respuesta.TextoRespuesta</p>
+                                <div class="textoRes">@respuesta.TextoRespuesta</div>
                                 </div>
                             }
                             else
                             {
                                 <div class="col-sm-6 respuesta noValida">
                                 <div class="opcion normal">@respuesta.OpcionRespuesta</div>
-                                <p class="textoRes">@respuesta.TextoRespuesta</p>
+                                <div class="textoRes">@respuesta.TextoRespuesta</div>
                                 </div>
                             }
                         }
@@ -93,11 +111,25 @@
                         {
                             if(i > ViewBag.posPozo && !ViewBag.listaPozo[i].ValorSeguro)
                             {
-                                <div class="escalon off">@(i+1) - $@ViewBag.listaPozo[i].Importe</div>
+                                if(i == ViewBag.posPozo+1)
+                                {
+                                    <div class="escalon enJuego">@(i+1) - $@ViewBag.listaPozo[i].Importe</div>
+                                }
+                                else
+                                {
+                                    <div class="escalon off">@(i+1) - $@ViewBag.listaPozo[i].Importe</div>
+                                }
                             }
                             if(i > ViewBag.posPozo && ViewBag.listaPozo[i].ValorSeguro)
                             {
-                                <div class="escalonSeg off">@(i+1) - $@ViewBag.listaPozo[i].Importe</div>
+                                if(i == ViewBag.posPozo+1)
+                                {
+                                    <div class="escalonSeg enJuego">@(i+1) - $@ViewBag.listaPozo[i].Importe</div>
+                                }
+                                else
+                                {
+                                    <div class="escalonSeg off">@(i+1) - $@ViewBag.listaPozo[i].Importe</div>
+                                }
                             }
                             if(i <= ViewBag.posPozo && !ViewBag.listaPozo[i].ValorSeguro)
                             {

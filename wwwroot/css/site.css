@@ -58,6 +58,14 @@ img{
   margin-top: 2%;
 }
 
+.dificultad {
+  margin-top: 3%;
+  float: right;
+  width: 15%;
+  height: auto;
+  font-family:'Courier New', Courier, monospace;
+}
+
 .comodines {
   width: 80%;
   height: 15%;
@@ -81,6 +89,10 @@ img{
   padding:5%;
   padding-left: 7%;
   padding-right: 7%;
+  background-color:rgb(191, 118, 0);
+}
+
+.onND {
   background-color:rgb(191, 118, 0);
 }
 
@@ -121,8 +133,10 @@ img{
 }
 
 .textoRes {
+  width: 80%;
   float: left;
-  margin-left: 5%;
+  padding-left: 5%;
+  padding-top: 3%;
   font-size: 100%;
 }
 
@@ -175,6 +189,10 @@ img{
 
 .completado {
   background-color: rgb(48, 160, 50);
+}
+
+.enJuego {
+  background-color: rgb(213, 185, 5);
 }
 
 .accion {
