@@ -5,12 +5,16 @@ public class Pregunta
     private int _IdPregunta;
     private string _TextoPregunta;
     private int _NivelDificultad;
+    private int _Orden;
+    private string _Idioma;
 
-    public Pregunta(int idPregunta, string textoPregunta, int nivelDificultad)
+    public Pregunta(int idPregunta, string textoPregunta, int nivelDificultad, int orden, string idioma)
     {
         _IdPregunta = idPregunta;
         _TextoPregunta = textoPregunta;
         _NivelDificultad = nivelDificultad;
+        _Orden = orden;
+        _Idioma = idioma;
     }
 
     public Pregunta()
@@ -34,5 +38,17 @@ public class Pregunta
     {
         get { return _NivelDificultad; }
         set { _NivelDificultad = value; }
+    }
+
+    public int Orden
+    {
+        get { return _Orden; }
+        set { _Orden = value; }
+    }
+
+    public string Idioma
+    {
+        get { return _Idioma; }
+        set { _Idioma = value; }
     }
 }

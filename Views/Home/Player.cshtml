@@ -4,7 +4,21 @@
 <body class="menu">
     <div class="logo"><img src="/logo.png"></div>
     <form class="nombre" method="post" action='@Url.Action("Jugar","Home")'>
-        <input name="Nombre" class="name" type="text" placeholder="Nombre">
-        <input type="submit" class="btn btn-warning" value="Jugar">
+        @{
+            switch(ViewBag.idioma)
+            {
+            case "ES":
+            <input name="Nombre" class="name" type="text" placeholder="Nombre">
+            <input name="Idioma" type="hidden" value="ES">
+            <input type="submit" class="btn btn-warning" value="Jugar">
+            break;
+
+            case "EN":
+            <input name="Nombre" class="name" type="text" placeholder="Name">
+            <input name="Idioma" type="hidden" value="EN">
+            <input type="submit" class="btn btn-warning" value="Play">
+            break;
+            }
+        }
     </form>
 </body>

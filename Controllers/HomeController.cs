@@ -18,15 +18,22 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Player()
+    public IActionResult Play(string Idioma)
     {
+        ViewBag.idioma = Idioma;
+        return View();
+    }
+
+    public IActionResult Player(string Idioma)
+    {
+        ViewBag.idioma = Idioma;
         return View();
     }
 
     [HttpPost]
-    public IActionResult Jugar(string Nombre)
+    public IActionResult Jugar(string Nombre, string Idioma)
     {
-        JuegoQQSM.IniciarJuego(Nombre);
+        JuegoQQSM.IniciarJuego(Nombre, Idioma);
         ViewBag.pregunta = JuegoQQSM.ObtenerPregunta();
         ViewBag.listaRespuestas = JuegoQQSM.ObtenerRespuestas();
         ViewBag.player = JuegoQQSM.DevolverJugador();

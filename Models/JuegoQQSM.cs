@@ -7,6 +7,7 @@ namespace TP07_Gitman_Zalcman.Models;
 public static class JuegoQQSM
 {
     private static string _connectionString = @"Server=.;DataBase=JuegoQQSM;Trusted_Connection=True;";
+    private static string _Idioma;
     private static int _PreguntaActual;
     private static char _RespuestaCorrectaActual;
     private static int _PosicionPozo;
@@ -16,8 +17,9 @@ public static class JuegoQQSM
     private static List<Pozo> _ListaPozo = new List<Pozo>();
     private static Jugador _Player = new Jugador();
 
-    public static void IniciarJuego(string Nombre)
+    public static void IniciarJuego(string Nombre, string Idioma)
     {
+        _Idioma = Idioma;
         _PreguntaActual = 1;
         _PosicionPozo = -1;
         _PozoAcumuladoSeguro = 0;
@@ -25,7 +27,7 @@ public static class JuegoQQSM
         _Comodin5050 = true;
         _ComodinDobleChance = true;
         _ComodinSaltearPregunta = true;
-        _Player = new Jugador(1, Nombre, DateTime.Now, _PozoAcumuladoSeguro, _ComodinDobleChance, _Comodin5050, _ComodinSaltearPregunta);
+        _Player = new Jugador(1, Nombre, DateTime.Now, _PozoAcumuladoSeguro, _ComodinDobleChance, _Comodin5050, _ComodinSaltearPregunta, _Idioma);
         int registrosAñadidos = 0;
         using(SqlConnection db = new SqlConnection(_connectionString))
         {

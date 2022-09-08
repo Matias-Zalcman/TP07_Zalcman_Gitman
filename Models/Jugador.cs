@@ -9,8 +9,9 @@ public class Jugador
     private bool _ComodinDobleChance;
     private bool _Comodin50;
     private bool _ComodinSaltear;
+    private string _Idioma;
 
-    public Jugador(int idJugador, string nombre, DateTime fechaHora, int pozoGanado, bool comodinDobleChance, bool comodin50, bool comodinSaltear)
+    public Jugador(int idJugador, string nombre, DateTime fechaHora, int pozoGanado, bool comodinDobleChance, bool comodin50, bool comodinSaltear, string idioma)
     {
         _IdJugador = idJugador;
         _Nombre = nombre;
@@ -19,6 +20,7 @@ public class Jugador
         _ComodinDobleChance = comodinDobleChance;
         _Comodin50 = comodin50;
         _ComodinSaltear = comodinSaltear;
+        _Idioma = idioma;
     }
 
     public Jugador()
@@ -66,5 +68,11 @@ public class Jugador
     {
         get { return _ComodinSaltear; }
         set { _ComodinSaltear = value; }
+    }
+
+    public string Idioma
+    {
+        get { return _Idioma; }
+        set { _Idioma = value; }
     }
 }

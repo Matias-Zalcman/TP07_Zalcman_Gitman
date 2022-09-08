@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Menú";
+}
+<body class="menu">
+    <div class="logo"><img src="/logo.png"></div>
+    @{
+        switch(ViewBag.idioma)
+        {
+           case "ES":
+           <a class="btn btn-warning jugar" href='@Url.Action("Player","Home",new {Idioma = "ES"})'>Jugar</a>
+           break;
+
+           case "EN":
+           <a class="btn btn-warning jugar" href='@Url.Action("Player","Home",new {Idioma = "EN"})'>Play</a>
+           break;
+        }
+    }
+    
+</body>
