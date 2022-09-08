@@ -7,11 +7,20 @@
     </div>
     <div class="col-sm-4 msjFinal">
         <h2>@ViewBag.player.Nombre,</h1>
-        <h3>Tu pozo acumulado es de:</h3>
+        @{switch(ViewBag.player.Idioma){case "ES":<h3>Tu pozo acumulado es de:</h3>break; case "EN":<h3>Your jackpot is:</h3>break;}}
         <h1 class="pozoGanado">$@ViewBag.player.PozoGanado</h1>
         <div class="logofinal"><img src="/logo.png"></div>
-        @{if(ViewBag.player.PozoGanado == 2000000){<h5>¡Felicidades, ganaste el premio mayor!</h5>}else{<h3>¡Gracias por participar!</h3>}}
-        <a href='@Url.Action("Index","Home")' class="btn btn-warning accion">Volver a jugar</a>
+        @{
+            if(ViewBag.player.PozoGanado == 2000000)
+            {
+                switch(ViewBag.player.Idioma){case "ES":<h5>¡Felicidades, ganaste el premio mayor!</h5>break; case "EN":<h5>Congratulations, you won the biggest prize!</h5>break;}
+            }
+            else
+            {
+                switch(ViewBag.player.Idioma){case "ES":<h3>¡Gracias por participar!</h3>break; case "EN":<h3>Thanks for taking part!</h3>break;}
+            }
+            switch(ViewBag.player.Idioma){case "ES":<a href='@Url.Action("Index","Home")' class="btn btn-warning accion">Volver a jugar</a>break; case "EN":<a href='@Url.Action("Index","Home")' class="btn btn-warning accion">Play again</a>break;}
+        }
     </div>
     <div class="col-sm-4">
         @{if(ViewBag.player.PozoGanado == 2000000){<img src="/dinero.gif"><img src="/dinero.gif"><img src="/dinero.gif">}}

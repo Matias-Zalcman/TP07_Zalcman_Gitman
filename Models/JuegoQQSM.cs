@@ -31,8 +31,8 @@ public static class JuegoQQSM
         int registrosAñadidos = 0;
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = "INSERT INTO Jugadores VALUES(@pNombre, @pFechaHora, @pPozoGanado, @pComodinDC, @pComodin50, @pComodinSaltear)";
-            registrosAñadidos = db.Execute(sql, new {pNombre = _Player.Nombre, pFechaHora = _Player.FechaHora, pPozoGanado = _Player.PozoGanado, pComodinDC = _Player.ComodinDobleChance, pComodin50 = _Player.Comodin50, pComodinSaltear = _Player.ComodinSaltear});
+            string sql = "INSERT INTO Jugadores VALUES(@pNombre, @pFechaHora, @pPozoGanado, @pComodinDC, @pComodin50, @pComodinSaltear, @pIdioma)";
+            registrosAñadidos = db.Execute(sql, new {pNombre = _Player.Nombre, pFechaHora = _Player.FechaHora, pPozoGanado = _Player.PozoGanado, pComodinDC = _Player.ComodinDobleChance, pComodin50 = _Player.Comodin50, pComodinSaltear = _Player.ComodinSaltear, pIdioma = _Player.Idioma});
         }
     }
     public static Pregunta ObtenerPregunta()
@@ -40,8 +40,8 @@ public static class JuegoQQSM
         Pregunta Pregunta = null;
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT Preguntas.* FROM Preguntas WHERE Preguntas.IdPregunta = @pPregunta";
-            Pregunta = db.QueryFirstOrDefault<Pregunta>(sql, new {pPregunta = _PreguntaActual});
+            string sql = "SELECT Preguntas.* FROM Preguntas WHERE Preguntas.Orden = @pPregunta and Preguntas.Idioma = @pIdioma";
+            Pregunta = db.QueryFirstOrDefault<Pregunta>(sql, new {pPregunta = _PreguntaActual, pIdioma = _Idioma});
         }
         return Pregunta;
     }
@@ -54,8 +54,8 @@ public static class JuegoQQSM
         List<Respuesta> ListaRespuestas = new List<Respuesta>();
         using(SqlConnection db = new SqlConnection(_connectionString))
         {
-            string sql = "SELECT Respuestas.* FROM Respuestas WHERE Respuestas.IdPregunta = @pPregunta";
-            ListaRespuestas = db.Query<Respuesta>(sql, new {pPregunta = _PreguntaActual}).ToList();
+            string sql = "SELECT Respuestas.* FROM Respuestas INNER JOIN Preguntas on Preguntas.IdPregunta = Respuestas.IdPregunta WHERE Preguntas.Orden = @pPregunta and Preguntas.Idioma = @pIdioma";
+            ListaRespuestas = db.Query<Respuesta>(sql, new {pPregunta = _PreguntaActual, pIdioma = _Idioma}).ToList();
         }
         foreach(Respuesta respuesta in ListaRespuestas)
         {
@@ -68,16 +68,7 @@ public static class JuegoQQSM
     }
     public static char ObtenerOpcionCorrecta()
     {
-        List<Respuesta> ListaRespuestas = ObtenerRespuestas();
-        char opcionCorrecta = 'Z';
-        foreach(Respuesta respuesta in ListaRespuestas)
-        {
-            if(respuesta.Correcta)
-            {
-                opcionCorrecta = respuesta.OpcionRespuesta;
-            }
-        }
-        return opcionCorrecta;
+        return _RespuestaCorrectaActual;
     }
     public static bool RespuestaUsuario(char Opcion)
     {
@@ -143,8 +134,8 @@ public static class JuegoQQSM
             }
             using(SqlConnection db = new SqlConnection(_connectionString))
             {
-                sql = "SELECT TOP 2 Respuestas.OpcionRespuesta FROM Respuestas WHERE Respuestas.IdPregunta = @pPregunta and Respuestas.Correcta = 0";
-                ListaDescarte = db.Query<char>(sql, new {pPregunta = _PreguntaActual}).ToList();
+                sql = "SELECT TOP 2 Respuestas.OpcionRespuesta FROM Respuestas INNER JOIN Preguntas on Preguntas.IdPregunta = Respuestas.IdPregunta WHERE Preguntas.Orden = @pPregunta and Preguntas.Idioma = @pIdioma and Respuestas.Correcta = 0";
+                ListaDescarte = db.Query<char>(sql, new {pPregunta = _PreguntaActual, pIdioma = _Idioma}).ToList();
             }
         }
         return ListaDescarte;

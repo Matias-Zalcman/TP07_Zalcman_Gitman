@@ -3,6 +3,9 @@
 }
 <body class="menu">
     <div class="logo"><img src="/logo.png"></div>
-    <a class="btn btn-warning" href='@Url.Action("Play","Home",new {Idioma = "ES"})'>ES</a>
-    <a class="btn btn-warning" href='@Url.Action("Play","Home",new {Idioma = "EN"})'>EN</a>
+    <div class="paises">
+        <h4>Select your language:</h4>
+        <a href='@Url.Action("Play","Home",new {Idioma = "ES"})'><img class="idioma" src="/es.png"></a>
+        <a href='@Url.Action("Play","Home",new {Idioma = "EN"})'><img class="idioma" src="/en.png"></a>
+    </div>
 </body>

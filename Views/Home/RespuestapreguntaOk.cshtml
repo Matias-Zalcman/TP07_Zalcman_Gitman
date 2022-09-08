@@ -7,22 +7,22 @@
             switch(ViewBag.pregunta.NivelDificultad)
             {
                 case 1:
-                <h4><b>Nivel: Fácil</b></h4>
+                switch(ViewBag.player.Idioma){case "ES":<h4><b>Nivel: Fácil</b></h4>break; case "EN":<h4><b>Level: Easy</b></h4>break;}
                 break;
 
                 case 2:
-                <h4><b>Nivel: Medio</b></h4>
+                switch(ViewBag.player.Idioma){case "ES":<h4><b>Nivel: Medio</b></h4>break; case "EN":<h4><b>Level: Medium</b></h4>break;}
                 break;
 
                 case 3:
-                <h4><b>Nivel: Difícil</b></h4>
+                switch(ViewBag.player.Idioma){case "ES":<h4><b>Nivel: Difícil</b></h4>break; case "EN":<h4><b>Level: Hard</b></h4>break;}
                 break;
             }
         }
     </div>
     <div class="row comodines">
         <div class="col-sm-3 comodintit">
-            <h3>Comodines</h3>
+            @{switch(ViewBag.player.Idioma){case "ES":<h3>Comodines</h3>break; case "EN":<h3>Wildcards</h3>break;}}
         </div>
         <div class="col-sm-3">
             @{if(ViewBag.player.Comodin50){<div class="comodin onND">50</div>}else{<div class="comodin off">50</div>}}
@@ -40,7 +40,7 @@
     </div>
     <div class="row juego">
         <div class="col-sm-8">
-            <h3>Pregunta @ViewBag.pregunta.IdPregunta</h3>
+            <h3>Pregunta @ViewBag.pregunta.Orden</h3>
             <div class="pregunta">@ViewBag.pregunta.TextoPregunta</div>
             <div class="row opciones">
                 @{
@@ -65,14 +65,24 @@
             </div>
             <div class="row">
                 @{
-                    if(ViewBag.pregunta.IdPregunta == 18)
+                    if(ViewBag.pregunta.Orden == 18)
                     {
-                        <a href='@Url.Action("FinDelJuego","Home")' class="btn btn-success accion">Reclamá tu pozo acumulado</a>
+                        switch(ViewBag.pregunta.Idioma){case "ES":<a href='@Url.Action("FinDelJuego","Home")' class="btn btn-success accion">Reclamá tu pozo acumulado</a>break; case "EN":<a href='@Url.Action("FinDelJuego","Home")' class="btn btn-success accion">Claim your jackpot</a>break;}
                     }
                     else
                     {
-                        <a href='@Url.Action("Avanzar","Home")' class="btn btn-success accion">Siguiente</a>
-                        <a href='@Url.Action("FinDelJuego","Home")' class="btn btn-danger accion">Plantarse</a>
+                        switch(ViewBag.pregunta.Idioma)
+                        {
+                            case "ES":
+                            <a href='@Url.Action("Avanzar","Home")' class="btn btn-success accion">Siguiente</a>
+                            <a href='@Url.Action("FinDelJuego","Home")' class="btn btn-danger accion">Plantarse</a>
+                            break;
+
+                            case "EN":
+                            <a href='@Url.Action("Avanzar","Home")' class="btn btn-success accion">Next</a>
+                            <a href='@Url.Action("FinDelJuego","Home")' class="btn btn-danger accion">Stand</a>
+                            break;
+                        }
                     }
                 }
             </div>

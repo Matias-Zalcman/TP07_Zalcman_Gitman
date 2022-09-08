@@ -7,22 +7,22 @@
             switch(ViewBag.pregunta.NivelDificultad)
             {
                 case 1:
-                <h4><b>Nivel: Fácil</b></h4>
+                switch(ViewBag.player.Idioma){case "ES":<h4><b>Nivel: Fácil</b></h4>break; case "EN":<h4><b>Level: Easy</b></h4>break;}
                 break;
 
                 case 2:
-                <h4><b>Nivel: Medio</b></h4>
+                switch(ViewBag.player.Idioma){case "ES":<h4><b>Nivel: Medio</b></h4>break; case "EN":<h4><b>Level: Medium</b></h4>break;}
                 break;
 
                 case 3:
-                <h4><b>Nivel: Difícil</b></h4>
+                switch(ViewBag.player.Idioma){case "ES":<h4><b>Nivel: Difícil</b></h4>break; case "EN":<h4><b>Level: Hard</b></h4>break;}
                 break;
             }
         }
     </div>
     <div class="row comodines">
         <div class="col-sm-3 comodintit">
-            <h3>Comodines</h3>
+            @{switch(ViewBag.player.Idioma){case "ES":<h3>Comodines</h3>break; case "EN":<h3>Wildcards</h3>break;}}
         </div>
         <div class="col-sm-3">
             @{if(ViewBag.player.Comodin50){<a href='@Url.Action("ComodinUsado","Home",new {comodin = 1})' class="comodin on">50</a>}else{<div class="comodin off">50</div>}}
@@ -34,7 +34,7 @@
             @{  
                 if(ViewBag.player.ComodinSaltear)
                 {
-                    if(ViewBag.pregunta.IdPregunta == 18)
+                    if(ViewBag.pregunta.Orden == 18)
                     {
                         <div class="comodin onND"><svg xmlns="http://www.w3.org/2000/svg" width="45" height="50" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
@@ -58,7 +58,7 @@
     </div>
     <div class="row juego">
         <div class="col-sm-8">
-            <h3>Pregunta @ViewBag.pregunta.IdPregunta</h3>
+            <h3>Pregunta @ViewBag.pregunta.Orden</h3>
             <div class="pregunta">@ViewBag.pregunta.TextoPregunta</div>
             <div class="row opciones">
                 @{

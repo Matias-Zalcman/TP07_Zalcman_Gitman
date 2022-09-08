@@ -23,7 +23,7 @@ body {
   background-size: cover;
 }
 
-img{
+img {
   width: 100%;
   height: auto;
 }
@@ -41,6 +41,18 @@ img{
   width: 45%;
   height: auto;
   margin-left: 27.5%;
+}
+
+.paises {
+  width: 30%;
+  height: auto;
+  margin-left: 35%;
+  text-align: center;
+}
+
+.idioma {
+  width: 15%;
+  height: auto;
 }
 
 .jugar {
