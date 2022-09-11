@@ -67,7 +67,7 @@
                 @{
                     if(ViewBag.pregunta.Orden == 18)
                     {
-                        switch(ViewBag.pregunta.Idioma){case "ES":<a href='@Url.Action("FinDelJuego","Home")' class="btn btn-success accion">Reclamá tu pozo acumulado</a>break; case "EN":<a href='@Url.Action("FinDelJuego","Home")' class="btn btn-success accion">Claim your jackpot</a>break;}
+                        switch(ViewBag.pregunta.Idioma){case "ES":<a href='@Url.Action("FinDelJuego","Home", new {error = false})' class="btn btn-success accion">Reclamá tu pozo acumulado</a>break; case "EN":<a href='@Url.Action("FinDelJuego","Home", new {error = false})' class="btn btn-success accion">Claim your jackpot</a>break;}
                     }
                     else
                     {
@@ -75,12 +75,12 @@
                         {
                             case "ES":
                             <a href='@Url.Action("Avanzar","Home")' class="btn btn-success accion">Siguiente</a>
-                            <a href='@Url.Action("FinDelJuego","Home")' class="btn btn-danger accion">Plantarse</a>
+                            <a href='@Url.Action("FinDelJuego","Home", new {error = false})' class="btn btn-danger accion">Plantarse</a>
                             break;
 
                             case "EN":
                             <a href='@Url.Action("Avanzar","Home")' class="btn btn-success accion">Next</a>
-                            <a href='@Url.Action("FinDelJuego","Home")' class="btn btn-danger accion">Stand</a>
+                            <a href='@Url.Action("FinDelJuego","Home", new {error = false})' class="btn btn-danger accion">Stand</a>
                             break;
                         }
                     }
