@@ -74,7 +74,7 @@
                 }
             </div>
             <div class="row">
-                @{switch(ViewBag.pregunta.Idioma){case "ES":<a href='@Url.Action("FinDelJuego","Home")' class="btn btn-warning accion">Reclamá tu pozo acumulado</a>break; case "EN":<a href='@Url.Action("FinDelJuego","Home")' class="btn btn-warning accion">Claim your jackpot</a>break;}}
+                @{switch(ViewBag.pregunta.Idioma){case "ES":<a href='@Url.Action("FinDelJuego","Home", new {error = true})' class="btn btn-warning accion">Reclamá tu pozo acumulado</a>break; case "EN":<a href='@Url.Action("FinDelJuego","Home", new {error = true})' class="btn btn-warning accion">Claim your jackpot</a>break;}}
             </div>
         </div>
         <div class="col-sm-4">
