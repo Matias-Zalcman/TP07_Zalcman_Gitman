@@ -135,8 +135,12 @@ public class HomeController : Controller
         return View("Pregunta");
     }
 
-    public IActionResult FinDelJuego()
+    public IActionResult FinDelJuego(bool error)
     {
+        if(!error)
+        {
+            JuegoQQSM.Plantarse();
+        }
         ViewBag.player = JuegoQQSM.DevolverJugador();
         return View("PantallaFindelJuego");
     }
