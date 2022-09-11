@@ -58,7 +58,7 @@
     </div>
     <div class="row juego">
         <div class="col-sm-8">
-            <h3>Pregunta @ViewBag.pregunta.Orden</h3>
+            @{switch(ViewBag.player.Idioma){case "ES":<h3>Pregunta @ViewBag.pregunta.Orden</h3>break; case "EN":<h3>Question @ViewBag.pregunta.Orden</h3>break;}}
             <div class="pregunta">@ViewBag.pregunta.TextoPregunta</div>
             <div class="row opciones">
                 @{
