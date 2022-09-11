@@ -90,6 +90,17 @@ public static class JuegoQQSM
         }
         return (Opcion == _RespuestaCorrectaActual);
     }
+    public static void Plantarse()
+    {
+        _PozoAcumuladoSeguro = _ListaPozo[_PosicionPozo].Importe;
+        _Player.PozoGanado = _ListaPozo[_PosicionPozo].Importe;
+        int registrosModificados = 0;
+        string sql = "UPDATE Jugadores SET PozoGanado = @pPozo WHERE IdJugador = @pIdJug";
+        using(SqlConnection db = new SqlConnection(_connectionString))
+        {
+            registrosModificados = db.Execute(sql, new {pPozo = _Player.PozoGanado, pIdJug = _Player.IdJugador});
+        }
+    }
     public static List<Pozo> ListarPozo()
     {
         if(_ListaPozo.Count == 0)
