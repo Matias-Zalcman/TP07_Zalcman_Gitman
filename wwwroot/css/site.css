@@ -28,6 +28,12 @@ img {
   height: auto;
 }
 
+a:hover {
+  color: white; 
+  text-decoration:none; 
+  cursor:pointer;  
+}
+
 .name {
   color: black;
 }
@@ -73,7 +79,7 @@ img {
 .dificultad {
   margin-top: 3%;
   float: right;
-  width: 15%;
+  width: 17%;
   height: auto;
   font-family:'Courier New', Courier, monospace;
 }
@@ -104,13 +110,25 @@ img {
   background-color:rgb(191, 118, 0);
 }
 
-.onND {
+.onSP {
+  padding:5%;
+  padding-left: 3%;
+  padding-right: 3%;
   background-color:rgb(191, 118, 0);
 }
 
-.onSP {
+.offC {
   padding:5%;
-  background-color:rgb(191, 118, 0);
+  padding-left: 7%;
+  padding-right: 7%;
+  background-color: rgb(131, 128, 128);
+}
+
+.offSP {
+  padding:5%;
+  padding-left: 3%;
+  padding-right: 3%;
+  background-color: rgb(131, 128, 128);
 }
 
 .off {

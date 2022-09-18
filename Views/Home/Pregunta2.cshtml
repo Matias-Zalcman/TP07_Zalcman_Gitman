@@ -25,10 +25,10 @@
             @{switch(ViewBag.player.Idioma){case "ES":<h3>Comodines</h3>break; case "EN":<h3>Wildcards</h3>break;}}
         </div>
         <div class="col-sm-3">
-            @{if(ViewBag.player.Comodin50){<a href='@Url.Action("ComodinUsado","Home",new {comodin = 1})' class="comodin on">50</a>}else{<div class="comodin off">50</div>}}
+            @{if(ViewBag.player.Comodin50){<a href='@Url.Action("ComodinUsado","Home",new {comodin = 1})' class="comodin on">50</a>}else{<a class="comodin offC">50</a>}}
         </div>
         <div class="col-sm-3">
-            @{if(ViewBag.player.ComodinDobleChance){<a href='@Url.Action("ComodinUsado","Home",new {comodin = 2})' class="comodin on">x2</a>}else{<div class="comodin off">x2</div>}}
+            @{if(ViewBag.player.ComodinDobleChance){<a href='@Url.Action("ComodinUsado","Home",new {comodin = 2})' class="comodin on">x2</a>}else{<a class="comodin offC">x2</a>}}
         </div>
         <div class="col-sm-3">
             @{  
@@ -36,9 +36,9 @@
                 {
                     if(ViewBag.pregunta.Orden == 18)
                     {
-                        <div class="comodin onND"><svg xmlns="http://www.w3.org/2000/svg" width="45" height="50" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <a class="comodin onSP"><svg xmlns="http://www.w3.org/2000/svg" width="45" height="50" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                        </svg></div>
+                        </svg></a>
                     }
                     else
                     {
@@ -49,9 +49,9 @@
                 }
                 else
                 {
-                    <div class="comodin off"><svg xmlns="http://www.w3.org/2000/svg" width="45" height="50" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                    <a class="comodin offSP"><svg xmlns="http://www.w3.org/2000/svg" width="45" height="50" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-                    </svg></div>
+                    </svg></a>
                 }
             }
         </div>
